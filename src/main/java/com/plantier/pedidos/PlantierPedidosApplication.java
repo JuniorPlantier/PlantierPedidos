@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.plantier.pedidos.domain.Categoria;
 import com.plantier.pedidos.domain.Cidade;
+import com.plantier.pedidos.domain.Cliente;
+import com.plantier.pedidos.domain.Endereco;
 import com.plantier.pedidos.domain.Estado;
 import com.plantier.pedidos.domain.Produto;
+import com.plantier.pedidos.domain.enums.TipoCliente;
 import com.plantier.pedidos.repositories.CategoriaRepository;
 import com.plantier.pedidos.repositories.CidadeRepository;
+import com.plantier.pedidos.repositories.ClienteRepository;
+import com.plantier.pedidos.repositories.EnderecoRepository;
 import com.plantier.pedidos.repositories.EstadoRepository;
 import com.plantier.pedidos.repositories.ProdutoRepository;
 
@@ -30,6 +35,12 @@ public class PlantierPedidosApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(PlantierPedidosApplication.class, args);
@@ -69,6 +80,19 @@ public class PlantierPedidosApplication implements CommandLineRunner {
 		
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		// ###########
+		Cliente cli1 = new Cliente(null, "Rogério Ceni", "ceni@spfc.com.br", "12346789", TipoCliente.PESSOAJURIDICA);
+		cli1.getTelefones().addAll(Arrays.asList("32145847", "45698985"));
+		
+		Endereco e1 = new Endereco(null, "Av. Morumbi", "444", "Apto 712", "Morumbi", "123-546", cli1, c3);
+		Endereco e2 = new Endereco(null, "Av. Matos", "548", "Casa 8", "Vila Sabrinca", "54545-56", cli1, c1);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		
 	}	
 
