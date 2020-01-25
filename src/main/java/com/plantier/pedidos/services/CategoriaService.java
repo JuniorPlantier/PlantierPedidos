@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.plantier.pedidos.domain.Categoria;
 import com.plantier.pedidos.repositories.CategoriaRepository;
+import com.plantier.pedidos.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -16,6 +17,8 @@ public class CategoriaService {
 	
 	public Categoria buscar(Integer id){
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElse(null);
+		
+		return obj.orElseThrow( () -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: "+id+", Tipo: "+Categoria.class.getName()));
 	}
 }
