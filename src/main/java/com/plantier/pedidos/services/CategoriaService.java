@@ -2,6 +2,7 @@ package com.plantier.pedidos.services;
 
 import java.util.Optional;
 
+import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,10 @@ public class CategoriaService {
 		
 		return obj.orElseThrow( () -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: "+id+", Tipo: "+Categoria.class.getName()));
+	}
+	
+	public Categoria insert(Categoria obj) {
+		obj.setId(null);
+		return repo.save(obj);
 	}
 }
