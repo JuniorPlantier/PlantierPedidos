@@ -13,6 +13,7 @@ import com.plantier.pedidos.domain.Cidade;
 import com.plantier.pedidos.domain.Cliente;
 import com.plantier.pedidos.domain.Endereco;
 import com.plantier.pedidos.domain.Estado;
+import com.plantier.pedidos.domain.ItemPedido;
 import com.plantier.pedidos.domain.Pagamento;
 import com.plantier.pedidos.domain.PagamentoComBoleto;
 import com.plantier.pedidos.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.plantier.pedidos.repositories.CidadeRepository;
 import com.plantier.pedidos.repositories.ClienteRepository;
 import com.plantier.pedidos.repositories.EnderecoRepository;
 import com.plantier.pedidos.repositories.EstadoRepository;
+import com.plantier.pedidos.repositories.ItemPedidoRepository;
 import com.plantier.pedidos.repositories.PagamentoRepository;
 import com.plantier.pedidos.repositories.PedidoRepository;
 import com.plantier.pedidos.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class PlantierPedidosApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(PlantierPedidosApplication.class, args);
@@ -123,6 +128,20 @@ public class PlantierPedidosApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		// ###########
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 		
 	}	
 
