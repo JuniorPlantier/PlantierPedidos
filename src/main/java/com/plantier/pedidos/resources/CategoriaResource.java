@@ -1,6 +1,8 @@
 package com.plantier.pedidos.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.plantier.pedidos.domain.Categoria;
+import com.plantier.pedidos.dto.CategoriaDTO;
 import com.plantier.pedidos.services.CategoriaService;
 
 @RestController
@@ -51,6 +54,14 @@ public class CategoriaResource {
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> list = service.findAll();
+		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		// percorrer a lista, usando um recurso do Java 8, o map irá efetuar uma operação para cada elemento da lista, volta o stream de objetos para o tipo lista  
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 }
