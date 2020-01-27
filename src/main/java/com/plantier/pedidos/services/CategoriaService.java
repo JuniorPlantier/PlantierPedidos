@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.plantier.pedidos.domain.Categoria;
+import com.plantier.pedidos.dto.CategoriaDTO;
 import com.plantier.pedidos.repositories.CategoriaRepository;
 import com.plantier.pedidos.services.exceptions.DataIntegrityException;
 import com.plantier.pedidos.services.exceptions.ObjectNotFoundException;
@@ -55,5 +56,10 @@ public class CategoriaService {
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	// a partir de um DTO, é construído um objeto Categoria.
+	public Categoria castDto(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 }
