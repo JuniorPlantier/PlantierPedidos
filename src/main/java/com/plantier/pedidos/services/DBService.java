@@ -19,6 +19,7 @@ import com.plantier.pedidos.domain.PagamentoComCartao;
 import com.plantier.pedidos.domain.Pedido;
 import com.plantier.pedidos.domain.Produto;
 import com.plantier.pedidos.domain.enums.EstadoPagamento;
+import com.plantier.pedidos.domain.enums.Perfil;
 import com.plantier.pedidos.domain.enums.TipoCliente;
 import com.plantier.pedidos.repositories.CategoriaRepository;
 import com.plantier.pedidos.repositories.CidadeRepository;
@@ -198,7 +199,7 @@ public class DBService {
 		
 		Cidade c1 = new Cidade(null, "Uberlândia", est1);
 		Cidade c2 = new Cidade(null, "São Paulo", est2);
-		Cidade c3 = new Cidade(null, "Campinas", est2);
+		Cidade c3 = new Cidade(null, "Bauru", est2);
 		
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
@@ -206,15 +207,25 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
+<<<<<<< HEAD
 		Cliente cli1 = new Cliente(null, "Maria Silva", "junior.plantier@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		
 		Cliente cli2 = new Cliente(null, "Ana Costa", "acosta@gmail.com", "31628382740", TipoCliente.PESSOAFISICA);
+=======
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
+		Cliente cli1 = new Cliente(null, "Rogério Cenu", "junior.plantier@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, passwordEncoder.encode("123"));
+		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Cliente cli2 = new Cliente(null, "Steph Curry", "pedido.plantier@gmail.com", "31628382740", TipoCliente.PESSOAFISICA, passwordEncoder.encode("123"));
+>>>>>>> 90ad215... Salvando perfis de usuários na base de dados
 		cli2.getTelefones().addAll(Arrays.asList("93883321", "34252625"));
+		cli2.addPerfil(Perfil.ADMIN);
 		
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
-		Endereco e3 = new Endereco(null, "Avenida Floriano", "2106", null, "Centro", "281777012", cli2, c2);
+		Endereco e3 = new Endereco(null, "Avenue Pocahomdas", "665", null, "Center", "281777012", cli2, c2);
 		
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 		cli2.getEnderecos().addAll(Arrays.asList(e3));
