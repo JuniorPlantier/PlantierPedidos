@@ -20,6 +20,7 @@ import com.plantier.pedidos.domain.PagamentoComCartao;
 import com.plantier.pedidos.domain.Pedido;
 import com.plantier.pedidos.domain.Produto;
 import com.plantier.pedidos.domain.enums.EstadoPagamento;
+import com.plantier.pedidos.domain.enums.Perfil;
 import com.plantier.pedidos.domain.enums.TipoCliente;
 import com.plantier.pedidos.repositories.CategoriaRepository;
 import com.plantier.pedidos.repositories.CidadeRepository;
@@ -212,6 +213,7 @@ public class DBService {
 		
 		Cliente cli1 = new Cliente(null, "Maria Silva", "junior.plantier@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		cli1.addPerfil(Perfil.ADMIN);
 		
 		Cliente cli2 = new Cliente(null, "Ana Costa", "acosta@gmail.com", "31628382740", TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli2.getTelefones().addAll(Arrays.asList("93883321", "34252625"));
