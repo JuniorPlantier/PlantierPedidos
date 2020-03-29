@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.plantier.pedidos.domain.Cidade;
 import com.plantier.pedidos.domain.Cliente;
 import com.plantier.pedidos.domain.Endereco;
+import com.plantier.pedidos.domain.enums.Perfil;
 import com.plantier.pedidos.domain.enums.TipoCliente;
 import com.plantier.pedidos.dto.ClienteDTO;
 import com.plantier.pedidos.dto.ClienteNewDTO;
 import com.plantier.pedidos.repositories.ClienteRepository;
 import com.plantier.pedidos.repositories.EnderecoRepository;
+import com.plantier.pedidos.security.UserSS;
+import com.plantier.pedidos.services.exceptions.AuthorizationException;
 import com.plantier.pedidos.services.exceptions.DataIntegrityException;
 import com.plantier.pedidos.services.exceptions.ObjectNotFoundException;
 
@@ -36,6 +39,11 @@ public class ClienteService {
 	private BCryptPasswordEncoder pe;
 	
 	public Cliente find(Integer id){
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) &&  !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+		
 		Optional<Cliente> obj = repo.findById(id);
 		
 		return obj.orElseThrow( () -> new ObjectNotFoundException(

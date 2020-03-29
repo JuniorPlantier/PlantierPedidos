@@ -73,4 +73,9 @@ public class UserSS implements UserDetails {
 		return true;
 	}
 
+	public boolean hasRole(Perfil perfil) {
+		// Tem q converter o tipo Perfil para o tipo Collection<? extends GrantedAuthority>
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
+	}
+
 }
